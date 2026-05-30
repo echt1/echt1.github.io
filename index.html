@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dein name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080808;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.18);
+  --card-bg: rgba(255,255,255,0.04);
+  --card-bg-hover: rgba(255,255,255,0.08);
+  --red: #D50000;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  overflow-x: hidden;
+}
+
+/* subtle red glow top */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 50vh;
+  background: radial-gradient(ellipse 60% 35% at 50% -5%, rgba(213,0,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── LOGO / HEADER ── */
+.site-logo {
+  margin-bottom: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.site-logo img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  /* falls kein Bild: Fallback-Text unten */
+}
+/* Fallback-Text, sichtbar wenn kein <img> vorhanden */
+.site-logo-text {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+.site-logo-text span { color: var(--red); }
+
+/* ── GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 820px;
+}
+
+/* ── KACHEL ── */
+.tile {
+  position: relative;
+  aspect-ratio: 3/2;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 0.5px solid var(--border);
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  transition: border-color 0.2s, transform 0.18s, background 0.2s;
+}
+.tile:hover {
+  border-color: var(--border-hover);
+  background: var(--card-bg-hover);
+  transform: translateY(-3px);
+}
+.tile:active { transform: scale(0.97); }
+
+/* Bild füllt die Kachel */
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* oder cover, je nach Logo */
+  display: block;
+  padding: 18px; /* Innenabstand damit Logo nicht am Rand klebt */
+  transition: transform 0.3s ease;
+}
+.tile:hover img { transform: scale(1.04); }
+
+/* optionaler Hover-Overlay */
+.tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.03);
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: 14px;
+}
+.tile:hover::after { opacity: 1; }
+
+/* ── REVEAL ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { animation: fadeUp 0.45s ease both; }
+</style>
+</head>
+<body>
+
+  <!-- LOGO OBEN: ersetze src mit deinem Logo-Pfad -->
+  <div class="site-logo reveal" style="animation-delay:0s">
+    <!-- <img src="logo.png" alt="dein name"> -->
+    <!-- Solange kein Logo: Fallback-Text -->
+    <span class="site-logo-text">dein name<span>.</span></span>
+  </div>
+
+  <!-- KACHELN -->
+  <nav class="grid" aria-label="Seiten">
+
+    <!-- Kachel 1 — ersetze href und src -->
+    <a href="https://deine-seite-1.de" class="tile reveal" style="animation-delay:0.06s" aria-label="Seite 1">
+      <img src="logo-seite1.png" alt="Seite 1">
+    </a>
+
+    <!-- Kachel 2 -->
+    <a href="https://deine-seite-2.de" class="tile reveal" style="animation-delay:0.10s" aria-label="Seite 2">
+      <img src="logo-seite2.png" alt="Seite 2">
+    </a>
+
+    <!-- Kachel 3 -->
+    <a href="https://deine-seite-3.de" class="tile reveal" style="animation-delay:0.14s" aria-label="Seite 3">
+      <img src="logo-seite3.png" alt="Seite 3">
+    </a>
+
+    <!-- Kachel 4 -->
+    <a href="https://deine-seite-4.de" class="tile reveal" style="animation-delay:0.18s" aria-label="Seite 4">
+      <img src="logo-seite4.png" alt="Seite 4">
+    </a>
+
+    <!-- Kachel 5 -->
+    <a href="https://deine-seite-5.de" class="tile reveal" style="animation-delay:0.22s" aria-label="Seite 5">
+      <img src="logo-seite5.png" alt="Seite 5">
+    </a>
+
+    <!-- Kachel 6 -->
+    <a href="https://deine-seite-6.de" class="tile reveal" style="animation-delay:0.26s" aria-label="Seite 6">
+      <img src="logo-seite6.png" alt="Seite 6">
+    </a>
+
+    <!-- weitere Kacheln einfach als Kopie eines <a>-Blocks hinzufügen -->
+
+  </nav>
+
+</body>
+</html>
