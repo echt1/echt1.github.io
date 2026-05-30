@@ -7,17 +7,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
-
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --bg: #080808;
-  --border: rgba(255,255,255,0.07);
-  --border-hover: rgba(255,255,255,0.18);
-  --card-bg: rgba(255,255,255,0.04);
-  --card-bg-hover: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.22);
   --red: #D50000;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
@@ -28,91 +29,108 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem;
+  padding: 2rem;
   overflow-x: hidden;
 }
 
-/* subtle red glow top */
+/* vignette */
 body::before {
   content: '';
   position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 50vh;
-  background: radial-gradient(ellipse 60% 35% at 50% -5%, rgba(213,0,0,0.07) 0%, transparent 70%);
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%,   rgba(213,0,0,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,0,0,0.6) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 0% 50%,   rgba(0,0,0,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 100% 50%,  rgba(0,0,0,0.35) 0%, transparent 60%);
   pointer-events: none;
+  z-index: 0;
 }
 
-/* ── LOGO / HEADER ── */
+/* ── LOGO ── */
 .site-logo {
-  margin-bottom: 3.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2.5rem;
 }
 .site-logo img {
-  height: 48px;
+  height: 44px;
   width: auto;
   object-fit: contain;
-  /* falls kein Bild: Fallback-Text unten */
 }
-/* Fallback-Text, sichtbar wenn kein <img> vorhanden */
 .site-logo-text {
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   color: #fff;
 }
-.site-logo-text  { color: var(--red); }
+.site-logo-text span { color: var(--red); }
 
 /* ── GRID ── */
 .grid {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-  width: 100%;
-  max-width: 820px;
+  grid-template-columns: repeat(4, minmax(0, 210px));
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 210px));
+  }
+}
+
+@media (max-width: 460px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 160px));
+  }
 }
 
 /* ── KACHEL ── */
 .tile {
-  position: relative;
-  aspect-ratio: 3/2;
-  border-radius: 14px;
-  background: var(--card-bg);
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
   border: 0.5px solid var(--border);
   overflow: hidden;
   cursor: pointer;
   text-decoration: none;
   display: block;
-  transition: border-color 0.2s, transform 0.18s, background 0.2s;
+  transition: border-color 0.2s, transform 0.18s, box-shadow 0.2s;
+  position: relative;
 }
+
 .tile:hover {
   border-color: var(--border-hover);
-  background: var(--card-bg-hover);
-  transform: translateY(-3px);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
 }
-.tile:active { transform: scale(0.97); }
 
-/* Bild füllt die Kachel */
+.tile:active {
+  transform: scale(0.97);
+}
+
 .tile img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* oder cover, je nach Logo */
+  object-fit: cover;
   display: block;
-  padding: 18px; /* Innenabstand damit Logo nicht am Rand klebt */
   transition: transform 0.3s ease;
 }
-.tile:hover img { transform: scale(1.04); }
 
-/* optionaler Hover-Overlay */
+.tile:hover img {
+  transform: scale(1.05);
+}
+
+/* shimmer on hover */
 .tile::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.03);
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.2s;
-  border-radius: 14px;
+  border-radius: 18px;
 }
 .tile:hover::after { opacity: 1; }
 
@@ -126,37 +144,27 @@ body::before {
 </head>
 <body>
 
-  <!-- LOGO OBEN: ersetze src mit deinem Logo-Pfad -->
   <div class="site-logo reveal" style="animation-delay:0s">
-    <!-- <img src="logo.png" alt="dein name"> -->
-    <!-- Solange kein Logo: Fallback-Text -->
     <img src="logo.png" alt="echt">
   </div>
 
-  <!-- KACHELN -->
   <nav class="grid" aria-label="Seiten">
 
-    <!-- Kachel 1 — ersetze href und src -->
-    <a href="https://tinyurl.com/echtde" class="tile reveal" style="animation-delay:0.06s" aria-label="Seite 1">
-      <img src="echtde.png" alt="Seite 1">
+    <a href="https://tinyurl.com/echtde" class="tile reveal" style="animation-delay:0.06s" aria-label="echt.de">
+      <img src="echtde.png" alt="echt de">
     </a>
 
-    <!-- Kachel 2 -->
-    <a href="https://echt1.github.io/countdown" class="tile reveal" style="animation-delay:0.10s" aria-label="Seite 2">
-      <img src="cdstudiocompact.png" alt="Seite 2">
+    <a href="https://echt1.github.io/countdown" class="tile reveal" style="animation-delay:0.10s" aria-label="Countdown Studio">
+      <img src="cdstudiocompact.png" alt="countdownstudio">
     </a>
 
-    <!-- Kachel 3 -->
-    <a href="https://echt1.github.io/echtstudios" class="tile reveal" style="animation-delay:0.14s" aria-label="Seite 3">
-      <img src="echtmediathek.png" alt="Seite 3">
+    <a href="https://echt1.github.io/echtstudios" class="tile reveal" style="animation-delay:0.14s" aria-label="Mediathek der Echt Studios">
+      <img src="echtmediathek.png" alt="echtmediathek">
     </a>
 
-    <!-- Kachel 4 -->
-    <a href="https://echt1.github.io/list" class="tile reveal" style="animation-delay:0.14s" aria-label="Seite 3">
-      <img src="echtlist.png" alt="Seite 3">
+    <a href="https://echt1.github.io/list" class="tile reveal" style="animation-delay:0.18s" aria-label="Echt Watchlist">
+      <img src="echtlist.png" alt="echtlist">
     </a>
-
-    <!-- weitere Kacheln einfach als Kopie eines <a>-Blocks hinzufügen -->
 
   </nav>
 
