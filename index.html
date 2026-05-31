@@ -33,38 +33,28 @@ body {
   overflow-x: hidden;
 }
 
-/* vignette */
+/* banner background */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 50% 0%,   rgba(213,0,0,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,0,0,0.6) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 80% at 0% 50%,   rgba(0,0,0,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 100% 50%,  rgba(0,0,0,0.35) 0%, transparent 60%);
+  background-image: url('https://i.ibb.co/XZmrYxJN/kanalbanner26x.png');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.35);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
   pointer-events: none;
   z-index: 0;
 }
 
-/* ── LOGO ── */
-.site-logo {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 2.5rem;
-}
-.site-logo img {
-  height: 44px;
-  width: auto;
-  object-fit: contain;
-}
-.site-logo-text {
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: #fff;
-}
-.site-logo-text span { color: var(--red); }
+
 
 /* ── GRID ── */
 .grid {
@@ -143,10 +133,6 @@ body::before {
 </style>
 </head>
 <body>
-
-  <div class="site-logo reveal" style="animation-delay:0s">
-    <img src="logo.png" alt="echt">
-  </div>
 
   <nav class="grid" aria-label="Seiten">
 
